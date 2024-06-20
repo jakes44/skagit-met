@@ -28,3 +28,4 @@ From there run, `jupyterlab` in your base environment, and you should see the `s
 * https://www.nco.ncep.noaa.gov/pmb/products/hrrr/hrrr.t00z.wrfsfcf00.grib2.shtml
 * https://www.nco.ncep.noaa.gov/pmb/docs/on388/table2.html
 * https://www.nco.ncep.noaa.gov/pmb/docs/grib2/grib2_doc/grib2_table4-2.shtml
+* https://www.nco.ncep.noaa.gov/pmb/products/hrrr/hrrr.t00z.wrfsfcf00.grib2.shtml
