@@ -20,7 +20,10 @@ From there run, `jupyterlab` in your base environment, and you should see the `s
 1. Clone this repo
 2. In the root of the repo, run `./setup.sh` - this creates the conda environment, installs whats needed, etc.  
 3. Enter the environment using `conda activate skagit-met`
-4. If you're done, don't forget to `conda deactivate`. 
+4. If you're done, don't forget to `conda deactivate`.
+
+### Another Environment:
+* [Cryocloud](https://book.cryointhecloud.com/content/Getting_Started.html): Built-in environment to access and manipulate data.
 
 # Resources
 * https://rapidrefresh.noaa.gov/Diag-vars-NOAA-TechMemo.pdf
