@@ -1,0 +1,11 @@
+name: skagit-met
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - herbie-data
+  - ipykernel
+  - cartopy
+  - wgrib2
+  - geojson
+prefix: ./env
