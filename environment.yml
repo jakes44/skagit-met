@@ -8,4 +8,5 @@ dependencies:
   - cartopy
   - wgrib2
   - geojson
+  - zarr
 prefix: ./env

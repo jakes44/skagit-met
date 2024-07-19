@@ -1,5 +1,6 @@
 from herbie import Herbie, FastHerbie, wgrib2
 from herbie.core import wgrib2_idx
+import cfgrib
 
 import pandas as pd
 import xarray as xr
@@ -74,6 +75,18 @@ def parseParameters(paramString: str) -> list[str]:
 def cleanUpFiles(subsetFiles:list) -> None:
     [os.unlink(f) for f in subsetFiles]
 
+def mergeDatasets(regionSubsetGribFiles: list) -> xr.Dataset:
+    datasets = []
+    for f in regionSubsetGribFiles:
+        unMergedDatasets = cfgrib.open_datasets(f)
+        mergedDataset = xr.merge([ds.drop_vars(["surface", "heightAboveGround", "valid_time", "step"], errors="ignore") for ds in unMergedDatasets])
+        mergedDataset.load()
+        datasets.append(mergedDataset)
+    return xr.concat(datasets, dim='time')
+
+def write_to_zarr(dataset:xr.Dataset, path:str) -> None:
+    dataset.to_zarr(path)
+
 if __name__ == "__main__":
     # Get Arguments - model, variables, product, date range, and geo_json
     args = setupArgs()
@@ -82,7 +95,11 @@ if __name__ == "__main__":
     fh_files = downloadParameters(parameters, fh)
     bounds = parseGeoJson(args.geoJson)
     geo_limited_files = limitGeographicRange(bounds, fh_files)
+    mergedDs = mergeDatasets(geo_limited_files)
+    write_to_zarr(mergedDs, args.startDate + '_' + args.endDate + '_dat.zarr')
     cleanUpFiles(fh_files)
+    cleanUpFiles([f + '.idx' for f in geo_limited_files])
+    cleanUpFiles(geo_limited_files)
 
 
 
