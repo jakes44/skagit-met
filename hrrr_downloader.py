@@ -98,7 +98,7 @@ if __name__ == "__main__":
     mergedDs = mergeDatasets(geo_limited_files)
     write_to_zarr(mergedDs, args.startDate + '_' + args.endDate + '_dat.zarr')
     cleanUpFiles(fh_files)
-    cleanUpFiles([f + '.idx' for f in geo_limited_files])
+    cleanUpFiles([str(f) + '.idx' for f in geo_limited_files])
     cleanUpFiles(geo_limited_files)
 
 

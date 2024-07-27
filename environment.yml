@@ -9,4 +9,7 @@ dependencies:
   - wgrib2
   - geojson
   - zarr
+  - pygrib
+  - cfgrib
+  - dask
 prefix: ./env
