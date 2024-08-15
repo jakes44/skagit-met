@@ -8,4 +8,9 @@ dependencies:
   - cartopy
   - wgrib2
   - geojson
+  - zarr
+  - pygrib
+  - cfgrib
+  - dask
+  - flox
 prefix: ./env
