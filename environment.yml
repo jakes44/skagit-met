@@ -12,4 +12,5 @@ dependencies:
   - pygrib
   - cfgrib
   - dask
+  - flox
 prefix: ./env

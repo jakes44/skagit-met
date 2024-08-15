@@ -29,15 +29,14 @@ It:
 1. Downloads select parameters from hrrr archives over a specified  using fast herbie for parallel computation
 2. Geographically subsets that downloaded data using a provided geojson (geojson polygon boundary - see skagit_boundaries.json for more)
 3. Cleans up all data that is not geographically subsetted
+4. Saves the data as a zarr store to be read and manipulated - see hrr_model_downloader_notebook.ipynb for example usage
 
 When done this way, each day of data takes only a few MB of disk space. 
 
 To run: 
 1. Activate the conda environment in the root of this repo (see setup above)
-2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed - `python hrrr_downloader.py --startDate 2023-01-01 --endDate 2023-01-08 --parameters TMP:surface,RH:2 m above ground,WIND:10 m above ground,APCP:surface,DSWRF:surface,DLWRF:surface`
+2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed -  python hrrr_downloader.py --startDate 2023-02-01 --endDate 2023-02-08 --parameters 'TMP:surface,RH:2 m above ground,WIND:10 m above ground,APCP:surface:0-1 hour acc fcst,DSWRF:surface,DLWRF:surface'
 3. For help with parameters, run `python hrrr_downloader.py -h`
-
-TODO: Merge downloaded data into one large time series (probably zarr)
 
 # Another Environment:
 * [Cryocloud](https://book.cryointhecloud.com/content/Getting_Started.html): Built-in environment to access and manipulate data.
