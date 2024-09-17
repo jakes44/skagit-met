@@ -18,4 +18,5 @@ dependencies:
   - netCDF4
   - metpy
   - xcdat
+  - ipympl
 prefix: ./env
