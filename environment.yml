@@ -13,4 +13,10 @@ dependencies:
   - cfgrib
   - dask
   - flox
+  - xarray
+  - boto3
+  - netCDF4
+  - metpy
+  - xcdat
+  - ipympl
 prefix: ./env
