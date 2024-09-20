@@ -35,7 +35,7 @@ When done this way, each day of data takes only a few MB of disk space.
 
 To run: 
 1. Activate the conda environment in the root of this repo (see setup above)
-2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed -  python hrrr_downloader.py --startDate 2023-02-01 --endDate 2023-02-08 --parameters 'TMP:surface,RH:2 m above ground,WIND:10 m above ground,APCP:surface:0-1 hour acc fcst,DSWRF:surface,DLWRF:surface'
+2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed -  `python hrrr_downloader.py --startDate 2023-02-01 --endDate 2023-02-08 --parameters 'TMP:surface,RH:2 m above ground,WIND:10 m above ground,APCP:surface:0-1 hour acc fcst,DSWRF:surface,DLWRF:surface'`
 3. For help with parameters, run `python hrrr_downloader.py -h`
 
 # wrf_downloader script
