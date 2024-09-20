@@ -39,7 +39,7 @@ To run:
 3. For help with parameters, run `python hrrr_downloader.py -h`
 
 # wrf_downloader script
-This script downloads and formats bulk, downscaled WRF output data from the [UCLA downscaled cmip6 archive] (https://dept.atmos.ucla.edu/alexhall/downscaling-cmip6). You can read more about the data tiers and various domains [here](https://dept.atmos.ucla.edu/sites/default/files/alexhall/files/aws_tiers_dirstructure_nov22.pdf)
+This script downloads and formats bulk, downscaled WRF output data from the [UCLA downscaled cmip6 archive](https://dept.atmos.ucla.edu/alexhall/downscaling-cmip6). You can read more about the data tiers and various domains [here](https://dept.atmos.ucla.edu/sites/default/files/alexhall/files/aws_tiers_dirstructure_nov22.pdf)
 
 Similar to the hrr_downloader script, it:
 1. Downloads select parameters from UCLA archives over a specified date range using multi-theraded connections to AWS. 
