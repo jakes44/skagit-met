@@ -113,7 +113,7 @@ def formatWrfArray(wrf_data: xr.Dataset, lat: xr.DataArray, lon: xr.DataArray, h
 
 def geoMaskWrfArray(wrf_array: xr.Dataset, gejson_path: str) -> xr.Dataset:
     boundary = gpd.read_file(gejson_path)
-    mask = vectorized.contains(boundary.geometry.item(), wrf_array.lon.values, wrf_array.lat.values)
+    mask = vectorized.contains(boundary.geometry[0], wrf_array.lon.values, wrf_array.lat.values)
     
     return wrf_array.where(mask)
 

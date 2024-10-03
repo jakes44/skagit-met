@@ -25,4 +25,5 @@ dependencies:
       - metloom
       - folium
       - mapclassify
+      - pyPRISMClimate
 prefix: ./env
