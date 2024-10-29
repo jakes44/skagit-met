@@ -52,7 +52,7 @@ def setupArgs() -> None:
                         required=True,
                         help='End date of data to download e.g. 2020-10-01 for October 1, 2020')
     parser.add_argument('--outputDir', 
-                        default='data/',
+                        default='data/weather_data/',
                         type=str,
                         help='Directory/path to download data/output zarr to.')
     parser.add_argument('--geojson', 
