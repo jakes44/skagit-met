@@ -1,0 +1,45 @@
+[project]
+authors = ["Jesse Akes <akesjesse@gmail.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "skagit-met"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+nb = "jupyter lab"
+hrr = {cmd = "python ./data/hrrr_downloader.py", cwd = "scripts"}
+wrf = "python scripts/wrf_downloader.py"
+prism = "python scripts/prism_downloader.py"
+
+
+[dependencies]
+python = "3.10.*"
+herbie-data = "*"
+ipykernel = "*"
+cartopy = "*"
+wgrib2 = "*"
+geojson = "*"
+zarr = "*"
+pygrib = "*"
+cfgrib = "*"
+dask = "*"
+flox = "*"
+xarray = "*"
+boto3 = "*"
+netcdf4 = "*"
+metpy = "*"
+xcdat = "*"
+ipympl = "*"
+contextily = "*"
+pip = "*"
+jupyterlab = ">=4.2.5,<5"
+pixi-kernel = ">=0.5.1,<0.6"
+rioxarray = ">=0.15.0,<0.16"
+virtualizarr = ">=1.0.0,<2"
+
+[pypi-dependencies]
+metloom = "*"
+folium = "*"
+mapclassify = "*"
+pyprismclimate = "*"
