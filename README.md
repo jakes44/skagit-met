@@ -17,6 +17,7 @@ From there run, `jupyter-lab` in your base environment, and you should see the `
 Thanks to Scott, this works really well with [pixi](https://pixi.sh/latest/), an alternate to conda environments that uses a project rather than environment paradigm. Pixi helps isolate and run entire projects through the use of configuration and lock files to manage dependencies all in one, but backed by the conda-forge repos and pypi. 
 
 To use pixi, install it on your machine, clone this repo, then run `pixi install` in the root of the repo.
+You may get an error big and long that mentions 'clang' or something like that. If that's the case run `export CFLAGS="-Wno-incompatible-function-pointer-types -Wno-implicit-function-declaration"` and try again. This is pre-run as a part of the setup script for the conda environment. 
 
 To play around with the jupyter notebooks, just run `pixi run nb`, and a local instance of jupyter will be launched for you with all the necessary packages and dependencies. It's quite magic. 
 
@@ -62,7 +63,7 @@ To run:
 3. If using pixi, run `pixi run wrf --model cesm2_r11i1p1f1_ssp245 --startDate 2023-01-01 --endDate 2023-01-08 --outputDir data/weather_data/`
 3. For help with parameters, run `python wrf_downloader.py -h`
 
-# wrf_downloader script
+# prism_downloader script
 This script downloads and formats bulk, downscaled PRISM output data from the [PRISM archives](https://www.prism.oregonstate.edu/). You can read more about the data [here](https://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf).
 
 Similar to the the other scripts, it:
