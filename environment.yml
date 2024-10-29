@@ -2,7 +2,7 @@ name: skagit-met
 channels:
   - conda-forge
 dependencies:
-  - python=3.9
+  - python=3.10.*
   - herbie-data
   - ipykernel
   - cartopy
@@ -21,8 +21,13 @@ dependencies:
   - ipympl
   - contextily
   - pip
+  - rioxarray
+  - virtualizarr
+  - xoak
+  - numba
   - pip:
       - metloom
       - folium
       - mapclassify
+      - pyPRISMClimate
 prefix: ./env

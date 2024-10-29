@@ -13,6 +13,14 @@ conda install nb_conda_kernels
 
 From there run, `jupyter-lab` in your base environment, and you should see the `skagit-met` kernel as an option
 
+## Alternate option
+Thanks to Scott, this works really well with [pixi](https://pixi.sh/latest/), an alternate to conda environments that uses a project rather than environment paradigm. Pixi helps isolate and run entire projects through the use of configuration and lock files to manage dependencies all in one, but backed by the conda-forge repos and pypi. 
+
+To use pixi, install it on your machine, clone this repo, then run `pixi install` in the root of the repo.
+You may get an error big and long that mentions 'clang' or something like that. If that's the case run `export CFLAGS="-Wno-incompatible-function-pointer-types -Wno-implicit-function-declaration"` and try again. This is pre-run as a part of the setup script for the conda environment. 
+
+To play around with the jupyter notebooks, just run `pixi run nb`, and a local instance of jupyter will be launched for you with all the necessary packages and dependencies. It's quite magic. 
+
 ### Assumptions:
 1. I assume you have conda, and all its dependencies installed, and a base conda environment going
 2. I assume you are using bash, but if you're using zsh or another shell, this will run better if you modify setup.sh to use the environment on line 7 of setup.sh
@@ -50,9 +58,25 @@ Similar to the hrr_downloader script, it:
 All 22 variables for WRF are about 56MB for a weeks worth of data, so 2.9GB as a zarr per year for that hourly data.
 
 To run:
-1. Activate the conda environment in the root of this repo (see setup above)
+1. Activate the conda environment in the root of this repo (see setup above) or have pixi installed
 2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed - `python wrf_downloader.py --model cesm2_r11i1p1f1_ssp245 --startDate 2023-01-01 --endDate 2023-01-08`
+3. If using pixi, run `pixi run wrf --model cesm2_r11i1p1f1_ssp245 --startDate 2023-01-01 --endDate 2023-01-08 --outputDir data/weather_data/`
 3. For help with parameters, run `python wrf_downloader.py -h`
+
+# prism_downloader script
+This script downloads and formats bulk, downscaled PRISM output data from the [PRISM archives](https://www.prism.oregonstate.edu/). You can read more about the data [here](https://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf).
+
+Similar to the the other scripts, it:
+1. Downloads select parameters from PRISM archives over a specified date range using multi-theraded connections to PRISM FTP servers. 
+2. Geographically subsets that downloaded data using a provided geojson
+3. Uses masking to establish boundaries
+4. Saves the data as a zarr store to be read and manipulated - see PRISM_Downloader.ipynb for example usage
+
+To run:
+1. Activate the conda environment in the root of this repo (see setup above) or have pixi installed
+2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed - `python prism_downloader.py --startDate 2023-01-01 --endDate 2023-01-08 --outputDir data/weather_data/`
+3. If using pixi, run `pixi run prism --startDate 2023-01-01 --endDate 2023-01-08 --outputDir data/weather_data/`
+3. For help with parameters, run `python prism_downloader.py -h`
 
 # Another Environment:
 * [Cryocloud](https://book.cryointhecloud.com/content/Getting_Started.html): Built-in environment to access and manipulate data.

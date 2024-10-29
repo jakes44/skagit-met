@@ -52,11 +52,11 @@ def setupArgs() -> None:
                         required=True,
                         help='End date of data to download e.g. 2020-10-01 for October 1, 2020')
     parser.add_argument('--outputDir', 
-                        default='data/',
+                        default='data/weather_data/',
                         type=str,
                         help='Directory/path to download data/output zarr to.')
     parser.add_argument('--geojson', 
-                        default='skagit_bound_poly.json',
+                        default='data/GIS/SkagitRiver_BasinBoundary.json',
                         type=str,
                         help='Path to/name of geo_json file that geogrpahically limits the downloaded data')
     return parser.parse_args()
@@ -101,9 +101,9 @@ def getLatLonHgtFromMetadata(metadata_file: str) -> (xr.DataArray, xr.DataArray)
 
 def formatWrfArray(wrf_data: xr.Dataset, lat: xr.DataArray, lon: xr.DataArray, hgt: xr.DataArray, parameters_to_keep: list[str]) -> xr.Dataset:
     wrf_data = wrf_data.assign_coords(lat=lat, lon=lon).assign(HGT=hgt).rename({'south_north': 'y', 'west_east': 'x'})
-    byte_times = wrf_data['Times']
-    time_strs = [str(time.values)[1:].replace("_", " ") for time in byte_times]
-    dts = pd.to_datetime(time_strs).strftime('%Y-%m-%dT%H:%M')
+    time_strs = wrf_data['Times'].astype(str)
+    time_strs = [t.replace("_", " ") for t in time_strs.values]
+    dts = pd.to_datetime(time_strs).floor('h')
     wrf_data = wrf_data.rename({'Time': 'time'}).assign(time=dts).drop_vars('Times')
 
     if parameters_to_keep:
@@ -113,7 +113,7 @@ def formatWrfArray(wrf_data: xr.Dataset, lat: xr.DataArray, lon: xr.DataArray, h
 
 def geoMaskWrfArray(wrf_array: xr.Dataset, gejson_path: str) -> xr.Dataset:
     boundary = gpd.read_file(gejson_path)
-    mask = vectorized.contains(boundary.geometry.item(), wrf_array.lon.values, wrf_array.lat.values)
+    mask = vectorized.contains(boundary.geometry[0], wrf_array.lon.values, wrf_array.lat.values)
     
     return wrf_array.where(mask)
 
@@ -126,8 +126,11 @@ def parseParameters(paramString: str) -> list[str]:
 def cleanUpFiles(files:list) -> None:
     [os.unlink(f) for f in files]
 
-def write_to_zarr(dataset:xr.Dataset, path:str) -> None:
-    dataset.to_zarr(path, mode='w')
+def write_to_zarr(dataset:xr.Dataset, output_dir: str, path:str) -> None:
+    if output_dir[-1] == '/':
+        output_dir = output_dir[:-1]
+
+    dataset.to_zarr(output_dir + '/' + path, mode='w')
 
 if __name__ == "__main__":
     # Get Arguments - model, variables, product, date range, and geo_json
@@ -153,6 +156,6 @@ if __name__ == "__main__":
     wrf_array_masked = geoMaskWrfArray(wrf_array_formatted, args.geojson)
 
     # Write to zarr and cleanup
-    write_to_zarr(wrf_array_masked, args.startDate + '_' + args.endDate + '_wrf_' + args.model + '_data.zarr')
+    write_to_zarr(wrf_array_masked, args.outputDir, args.startDate + '_' + args.endDate + '_wrf_' + args.model + '_data.zarr')
     cleanUpFiles(downloaded_files)
     cleanUpFiles([md_file])
