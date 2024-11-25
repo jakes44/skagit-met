@@ -20,14 +20,17 @@ dependencies:
   - xcdat
   - ipympl
   - contextily
+  - rioxarray
   - pip
   - rioxarray
   - virtualizarr
   - xoak
   - numba
+  - elevation
   - pip:
       - metloom
       - folium
       - mapclassify
       - pyPRISMClimate
+      - SynopticPy
 prefix: ./env
