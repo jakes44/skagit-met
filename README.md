@@ -1,6 +1,17 @@
 # skagit-met
 Exploring meteorology data for use in hydrologic modeling of the Skagit River basin
 
+# Datasets
+|Dataset          |Spatial Resolution     |Range/Availability|Data Granularity|Temperature|Precipitation|Wind Speed            |Relative Humidity         |Long Wave Radiation|Short Wave Radiation|
+|-----------------|-----------------------|------------------|----------------|-----------|-------------|----------------------|--------------------------|-------------------|--------------------|
+|HRRR             |3 km                   |2014 - present    |Hourly          |✔️         |✔️           |✔️                    |✔️                        |✔️                 |✔️                  |
+|PRISM            |4 km                   |1981 - present    |Daily           |✔️         |✔️           |X                     |Via Vapor Pressure Deficit|X                  |X                   |
+|UCLA CMIP-6 (WRF)|9 km                   |1980 - 2100       |Hourly          |✔️         |✔️           |Via U and V components|Via Specific Humidity     |✔️                 |✔️                  |
+|ORNL             |4 km                   |1980-2040         |Daily           |✔️         |✔️           |✔️                    |✔️                        |✔️                 |✔️                  |
+|SNOTEL           |Point Data (9 stations)|2010 - present    |Hourly          |✔️         |✔️           |X                     |X                         |X                  |X                   |
+|PNNNL            |6 km                   |1981 - 2020       |Hourly          |✔️         |✔️           |Via U and V components|Via Specific Humidity     |✔️                 |✔️                  |
+
+
 # Setup
 This repo relies on conda environments - I recommend [miniforge](https://github.com/conda-forge/miniforge). I also fast explored/protoyped herbie and other hrrr data in jupyter/ipython notebooks. 
 
