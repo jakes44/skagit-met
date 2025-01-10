@@ -11,6 +11,7 @@ import pathlib  # Python >= 3.4
 import dask as dask
 import argparse
 import time
+import traceback as tb
 
 DEFAULT_PARAMS = ['tmean', 'tmax', 'tmin', 'ppt', 'vpdmax', 'vpdmin']
 # Parse command arguments from script run in the command line
@@ -44,7 +45,7 @@ def create_prism_dataset(min_date: str, max_date: str, dest_path: str, boundarie
     
     # Collect Individual Variable Data arrays
     rasters = []
-    nc_files = pyPRISMClimate.utils.prism_iterator('../data/weather_data/')
+    nc_files = pyPRISMClimate.utils.prism_iterator(dest_path)
 
     for f in nc_files:
        # open weather file and clip to watershed boundaries
@@ -62,7 +63,7 @@ def create_prism_dataset(min_date: str, max_date: str, dest_path: str, boundarie
         rasters.append(raster)
         
     weather_dataset = xr.merge(rasters)
-    weather_dataset.to_zarr(output_file, mode='a')
+    weather_dataset.to_zarr(output_file, mode='w')
     
     return weather_dataset
 
@@ -101,14 +102,16 @@ if __name__ == "__main__":
                 )
                 break
             except Exception as e:
-                print(f"Attempt {attempt + 1} failed: {e}")
+                print(f"Attempt {attempt + 1} of {max_retries} for {var} failed: ", end="")
+                tb.print_exception(e, limit=0)
+                print(f"Retrying in {delay} seconds")
                 time.sleep(delay)
                 delay *= 2  # Exponential backoff
         else:
             print(f"Failed to download {var} after {max_retries} attempts")
 
     start_time = dt.now()
-    with ThreadPoolExecutor(max_workers=2) as executor:
+    with ThreadPoolExecutor(max_workers=5) as executor:
         futures = [
             executor.submit(download_with_backoff, var, dates[0].strftime("%Y-%m-%d"), dates[-1].strftime("%Y-%m-%d"), output_dir)
             for var in parameters
