@@ -13,24 +13,18 @@ Exploring meteorology data for use in hydrologic modeling of the Skagit River ba
 
 
 # Setup
-This repo relies on conda environments - I recommend [miniforge](https://github.com/conda-forge/miniforge). I also fast explored/protoyped herbie and other hrrr data in jupyter/ipython notebooks. 
-
-My setup installs jupyter in my base conda environment, then runs notebooks in the sub-envirionment kernels. You can do the same with:
-
-```
-conda install jupyterlab
-conda install nb_conda_kernels
-```
-
-From there run, `jupyter-lab` in your base environment, and you should see the `skagit-met` kernel as an option
-
-## Alternate option
 Thanks to Scott, this works really well with [pixi](https://pixi.sh/latest/), an alternate to conda environments that uses a project rather than environment paradigm. Pixi helps isolate and run entire projects through the use of configuration and lock files to manage dependencies all in one, but backed by the conda-forge repos and pypi. 
 
 To use pixi, install it on your machine, clone this repo, then run `pixi install` in the root of the repo.
 You may get an error big and long that mentions 'clang' or something like that. If that's the case run `export CFLAGS="-Wno-incompatible-function-pointer-types -Wno-implicit-function-declaration"` and try again. This is pre-run as a part of the setup script for the conda environment. 
 
 To play around with the jupyter notebooks, just run `pixi run nb`, and a local instance of jupyter will be launched for you with all the necessary packages and dependencies. It's quite magic. 
+
+## To get running with pixi on the DSHydro environment
+1. Run `curl -fsSL https://pixi.sh/install.sh | bash` to install pixi for your user
+2. Install the data-download environment or analysis environment using `pixi install -e download-data` and `pixi install -e analysis`
+3. To look at the analysis notebook, install the analysis kernel with the following command: `./skagit-met/.pixi/envs/analysis/bin/python3 -m ipykernel install --user --name=skagit_analysis`
+4. Once installed, open the Viz.ipynb file, and select the skagit_analyis kernel. 
 
 ### Assumptions:
 1. I assume you have conda, and all its dependencies installed, and a base conda environment going
@@ -54,8 +48,8 @@ When done this way, each day of data takes only a few MB of disk space.
 
 To run: 
 1. Activate the conda environment in the root of this repo (see setup above)
-2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed -  `python hrrr_downloader.py --startDate 2023-02-01 --endDate 2023-02-08 --parameters 'TMP:surface,RH:2 m above ground,WIND:10 m above ground,APCP:surface:0-1 hour acc fcst,DSWRF:surface,DLWRF:surface'`
-3. For help with parameters, run `python hrrr_downloader.py -h`
+2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed -  `pixi run hrrr --startDate 2023-02-01 --endDate 2023-02-08 --parameters 'TMP:surface,RH:2 m above ground,WIND:10 m above ground,APCP:surface:0-1 hour acc fcst,DSWRF:surface,DLWRF:surface'`
+3. For help with parameters, run `pixi run hrrr -h`
 
 # wrf_downloader script
 This script downloads and formats bulk, downscaled WRF output data from the [UCLA downscaled cmip6 archive](https://dept.atmos.ucla.edu/alexhall/downscaling-cmip6). You can read more about the data tiers and various domains [here](https://dept.atmos.ucla.edu/sites/default/files/alexhall/files/aws_tiers_dirstructure_nov22.pdf)
@@ -72,7 +66,7 @@ To run:
 1. Activate the conda environment in the root of this repo (see setup above) or have pixi installed
 2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed - `python wrf_downloader.py --model cesm2_r11i1p1f1_ssp245 --startDate 2023-01-01 --endDate 2023-01-08`
 3. If using pixi, run `pixi run wrf --model cesm2_r11i1p1f1_ssp245 --startDate 2023-01-01 --endDate 2023-01-08 --outputDir data/weather_data/`
-3. For help with parameters, run `python wrf_downloader.py -h`
+3. For help with parameters, run pixi run wrf_downloader.py -h`
 
 # prism_downloader script
 This script downloads and formats bulk, downscaled PRISM output data from the [PRISM archives](https://www.prism.oregonstate.edu/). You can read more about the data [here](https://www.prism.oregonstate.edu/documents/PRISM_datasets.pdf).
@@ -87,7 +81,7 @@ To run:
 1. Activate the conda environment in the root of this repo (see setup above) or have pixi installed
 2. Run from the command line using the following command - be sure to adjust the dates and parameters as needed - `python prism_downloader.py --startDate 2023-01-01 --endDate 2023-01-08 --outputDir data/weather_data/`
 3. If using pixi, run `pixi run prism --startDate 2023-01-01 --endDate 2023-01-08 --outputDir data/weather_data/`
-3. For help with parameters, run `python prism_downloader.py -h`
+3. For help with parameters, run `pixi run prism_downloader.py -h`
 
 # snotel_downloader script
 This script downloads and formats bulk SNOTEL data using metloom. You can read more about metloom [here](https://metloom.readthedocs.io/en/latest/).
