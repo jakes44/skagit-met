@@ -12,8 +12,9 @@ This repository hosts code to construct analysis ready data cubes for the Skagit
 |[UCLA CMIP-6 (WRF)](https://dept.atmos.ucla.edu/alexhall/downscaling-cmip6)|9 km                   |1980 - 2100       |Hourly          |✔️         |✔️           |Via U and V components|Via Specific Humidity     |✔️                 |✔️                  |
 |[ORNL](https://hydrosource.ornl.gov/data/datasets/9505v3_1/)             |4 km                   |1980-2040         |Daily           |✔️         |✔️           |✔️                    |✔️                        |✔️                 |✔️                  |
 |[SNOTEL](https://metloom.readthedocs.io/en/latest/)           |Point Data (9 stations)|2010 - present    |Hourly          |✔️         |✔️           |X                     |X                         |X                  |X                   |
-|[PNNL]()            |6 km                   |1981 - 2020       |Hourly          |✔️         |✔️           |Via U and V components|Via Specific Humidity     |✔️                 |✔️                  |
+|PNNL*            |6 km                   |1981 - 2020       |Hourly          |✔️         |✔️           |Via U and V components|Via Specific Humidity     |✔️                 |✔️                  |
 
+*This is a private experimental dataset hosted at the Pacific Northwest National Laboratory
 
 ## Environment Setup
 We recommend using [pixi](https://pixi.sh/latest/), an alternate to conda environments that uses a "per-project" rather than "global" environment paradigm. Pixi helps isolate software environments specific to a repository through the use of configuration and lock files to manage dependencies all in one, but backed by the conda-forge repos and pypi.
