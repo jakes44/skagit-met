@@ -1,7 +1,7 @@
 .pixi
 .gitattributes
 .vscode
-data/
+data/weather_data
 *.zarr
 *.parq
 *.parquet
