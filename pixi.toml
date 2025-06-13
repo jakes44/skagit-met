@@ -7,7 +7,7 @@ platforms = ["osx-arm64", "linux-64", "osx-64"]
 version = "0.1.0"
 
 [feature.data-download.tasks]
-hrr = "python scripts/hrrr_downloader.py"
+hrrr = "python scripts/hrrr_downloader.py"
 wrf = "python scripts/wrf_downloader.py"
 prism = "python scripts/prism_downloader.py"
 ornl = "python scripts/ornl_downloader.py"
